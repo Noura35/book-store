@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+
 using Bookly.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookly.Data
+
+
+
 {
-    public class BooklyContext : DbContext
+    public class BooklyContext : IdentityDbContext<DefaultUser>
     {
         public BooklyContext (DbContextOptions<BooklyContext> options)
             : base(options)
@@ -18,7 +20,9 @@ namespace Bookly.Data
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Bookly.Models.Cart> Cart { get; set; } = default!;
 
-        
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+ 
         
         
     }

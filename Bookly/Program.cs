@@ -1,18 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Bookly.Data;
 using Bookly.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BooklyContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("BooklyContext") ?? throw new InvalidOperationException("Connection string 'BooklyContext' not found.")));
 
+builder.Services.AddDefaultIdentity<DefaultUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<BooklyContext>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDefaultIdentity<DefaultUser>().AddEntityFrameworkStores<BooklyContext>();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-
 
 builder.Services.AddScoped<Cart>(sp => Cart.getCart(sp));
 
@@ -45,6 +50,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 //session:

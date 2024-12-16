@@ -64,8 +64,9 @@
 
         </tfoot>
     </table>
-    <a class="a-cleanup" asp-controller="Cart" asp-action="clearCart"  class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Empty cart
-    </a>
+    <a class="a-cleanup" asp-controller="Order" asp-action="Checkout"><div class="btn btn-success float-right mr-5">Checkout <i class="fa-solid fa-angles-right"></i></div> </a>
+
+    <a class="a-cleanup" asp-controller="Cart" asp-action="clearCart"  class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Empty cart</a>
 }
 else
 {
