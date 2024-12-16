@@ -2,21 +2,33 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    string HasImage(Book book)
+    {
+        if (book.urlImg != "" && book.urlImg != null)
+        {
+            return "fa-solid fa-check";
+        }
+        else
+        {
+            return "fa-solid fa-x";
+ 
+        }
+    }
+    
 }
 
-<h1>Index</h1>
+<h1>All Books</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-book"></i> add Book</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+           
             <th>
                 @Html.DisplayNameFor(model => model.title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.desc)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.lang)
@@ -34,7 +46,7 @@
                 @Html.DisplayNameFor(model => model.author)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.urlImg)
+                Has image
             </th>
             <th></th>
         </tr>
@@ -45,9 +57,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.title)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.desc)
-            </td>
+          
             <td>
                 @Html.DisplayFor(modelItem => item.lang)
             </td>
@@ -64,12 +74,13 @@
                 @Html.DisplayFor(modelItem => item.author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.urlImg)
+                <i class="@HasImage(item)"></i>
+            
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info" ><i class="fa-solid fa-circle-info"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
 }

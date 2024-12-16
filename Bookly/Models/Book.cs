@@ -21,7 +21,7 @@ public class Book
     public string  isbn { set; get; }
     
     [Required,DataType(DataType.Date),Display(Name = "Date published")]
-    public string datePub { set; get; }
+    public DateTime datePub { set; get; }
     
     [Required,DataType(DataType.Currency)]
     public int price { set; get; }
