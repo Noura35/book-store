@@ -1,0 +1,75 @@
+@model Bookly.Models.Cart
+
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+<h1>Cart</h1>
+
+@if (Model.CardItems.Count > 0)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Book</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Remove</th>
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.CardItems)
+        {
+            var booktotal = item.Book.price * item.quantity;
+            <tr>
+                <td>
+                    <a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id">
+                        <img src="@item.Book.urlImg" class="card-img-top card-img-custom">
+                    </a>
+                </td>
+                <td>
+                    <a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id">
+                        @item.Book.title
+                    </a>
+                </td>
+                <td> @booktotal.ToString("c"); </td>
+                <td>
+                    <a asp-controller="Cart" asp-action="ReduceQuantity" asp-route-id="@item.Book.Id" class="btn btn-danger"><i class="fa-solid fa-minus"></i></a>
+                    <strong> @item.quantity </strong>
+                    <a asp-controller="Cart" asp-action="IncreasQuantity" asp-route-id="@item.Book.Id" class="btn btn-success"><i class="fa-solid fa-plus"></i></a>
+
+                </td>
+
+                <td>
+                    <a  asp-controller="Cart"  asp-action="RemoveFromCart" asp-route-id="@item.Book.Id"><i class="fa-solid fa-xmark"></i></a>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <td></td>
+        <td class="text-right">
+            <strong> Total : </strong>
+        </td>
+        <td >
+            <strong> @Model?.getCartTotals().ToString("c")</strong>
+        </td>
+        <td></td>
+        <td></td>
+
+        </tfoot>
+    </table>
+    <a class="a-cleanup" asp-controller="Cart" asp-action="clearCart"  class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Empty cart
+    </a>
+}
+else
+{
+<h3 class="text-center"> Cart is empty</h3>
+}
+
+

@@ -15,5 +15,11 @@ namespace Bookly.Data
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Bookly.Models.Cart> Cart { get; set; } = default!;
+
+        
+        
+        
     }
 }
