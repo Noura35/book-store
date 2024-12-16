@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Bookly.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<BooklyContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("BooklyContext") ?? throw new InvalidOperationException("Connection string 'BooklyContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
