@@ -5,34 +5,46 @@
     ViewData["Title"] = "All roles";
 }
 
-<h1>All roles</h1>
+<div class="container " style="margin: 200px">
+<h4 class="mb-4">All Roles</h4>
 
-<a class="btn btn-primary mb-2" asp-action="AddRole"><i class="fa-solid fa-users"></i> Add role</a>
+<div class="mb-3">
+    <a class="btn btn-primary" asp-action="AddRole">
+        <i class="fa-solid fa-users"></i> Add Role
+    </a>
+</div>
 
 @if (Model.Any())
 {
-    <table class="table col-3">
-        <thead>
-            <tr>
-                <td><h5>Role</h5></td>
-                <td></td>
-            </tr>
+    <table class="table table-striped col-md-6 mx-auto">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Role</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
         </thead>
+        <tbody>
         @foreach (var role in Model)
         {
-            <tbody>
-                <tr>
-                    <td>@role.Name</td>
-                    <td class="text-center">
-                        <a asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a>
-                    </td>
-                </tr>
-            </tbody>
+            <tr>
+                <td>@role.Name</td>
+                <td class="text-center">
+                    <a asp-action="EditRole" asp-route-id="@role.Id" class="mx-1"  >
+                        <i class="fa-solid fa-pen-to-square"  style="color: #3a983c"></i>
+                    </a>
+                    <a asp-action="DeleteRole" asp-route-id="@role.Id" class="mx-1" >
+                        <i class="fa-solid fa-trash-can"  style="color: #d42136"></i>
+                    </a>
+                </td>
+            </tr>
         }
+        </tbody>
     </table>
 }
 else
 {
-    <h5>No roles yet, use the button above to add your first role.</h5>
+    <div class="alert alert-warning" role="alert">
+        <h5 class="text-center">No roles yet, use the button above to add your first role.</h5>
+    </div>
 }
+</div>

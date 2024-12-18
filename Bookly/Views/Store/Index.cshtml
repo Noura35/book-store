@@ -5,37 +5,112 @@
     ViewData["Title"] = "Store";
 }
 
-<h1 class="my-4">Store</h1>
-<form asp-action="Index" class="col-2 my-1 p-2">
-    <div>
-        Filter search
-        <div class="my-1">
-            <input type="text" name="searchString" placeholder="Title or Author" class="form-control-sm col-12" />
-        </div>
-        <div class="my-1">
-            <input type="number" name="minPrice" step="1" placeholder="$min" class="form-control-sm col-5" />&nbsp;&#8212;&nbsp;<input type="number" name="maxPrice" step="1" placeholder="$max" class="form-control-sm col-5" />
-        </div>
-        <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
-        <a asp-action="Index" class="btn btn-secondary btn-sm float-right">Clear</a>
-    </div>
-</form>
 
-<div class="row">
-    @foreach (var book in Model)
-    {
-        <div class="col-3">
-            <div class="card my-2 store-card">
-                <a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@book.Id">
-                    <img src="@book.urlImg" class="card-img-top card-img-custom">
-                    <div class="card-body" style="height: 6em;">
-                        <h5 class="mb-3">@book.title</h5>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-text">@book.price.ToString("c")</span>
-                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@book.Id" class="btn btn-primary float-right store-btn"><i class="fa-solid fa-cart-plus"></i></a>
-                    </div>
-                </a>
+
+
+
+
+<!-- Section limited offer -->
+<section id="limited-offer" class="padding-large"
+         style="background-image: url('images/banner-image-bg-1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 800px;">
+    <div class="container h-100 d-flex align-items-center">
+        <div class="row w-100">
+            <div class="col-md-6 mx-auto text-center">
+                <div class="image-holder">
+                    <img src="~/images/book.png" class="img-fluid" alt="banner">
+                </div>
             </div>
         </div>
-    }
+    </div>
+</section>
+
+<!-- Formulaire de filtre -->
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <form asp-action="Index" class="border p-4 shadow-sm rounded">
+                <h5 class="text-center mb-3">Filter Search</h5>
+                <div class="form-group">
+                    <input type="text" name="searchString" placeholder="Title or Author" class="form-control" />
+                </div>
+                <div class="form-group d-flex m-2">
+                    <input type="number" name="minPrice" step="1" placeholder="$min" class="form-control mr-2" />
+                    <span class="align-self-center mx-2">&#8212;</span>
+                    <input type="number" name="maxPrice" step="1" placeholder="$max" class="form-control ml-2" />
+                </div>
+                <div class="text-center my-4">
+                    <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
+                    <a asp-action="Index" class="btn btn-secondary btn-sm ml-2">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+
+<div class="swiper product-swiper">
+    <div class="swiper-wrapper">
+        @foreach (var book in Model)
+        {
+            <div class="swiper-slide">
+                <div class="card position-relative p-4 border rounded-3">
+                    <img src="@book.urlImg" class="img-fluid shadow-sm" alt="product item">
+                    <h6 class="mt-4 mb-0 fw-bold"><a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@book.Id">@book.title</a></h6>
+                    <div class="review-content d-flex">
+                        <p class="my-2 me-2 fs-6 text-black-50">@book.author</p>
+
+                        <div class="rating text-warning d-flex align-items-center">
+                            <svg class="star star-fill">
+                                <use xlink:href="#star-fill"></use>
+                            </svg>
+                            <svg class="star star-fill">
+                                <use xlink:href="#star-fill"></use>
+                            </svg>
+                            <svg class="star star-fill">
+                                <use xlink:href="#star-fill"></use>
+                            </svg>
+                            <svg class="star star-fill">
+                                <use xlink:href="#star-fill"></use>
+                            </svg>
+                           
+                        </div>
+                    </div>
+
+                    <span class="price text-primary fw-bold mb-2 fs-5">@book.price.ToString("c")</span>
+                    <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@book.Id" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top"
+                           data-bs-title="Tooltip on top">
+                            <svg class="cart">
+                                <use xlink:href="#cart-icon"></use> <!-- Assuming you have a symbol or sprite for the cart icon -->
+                            </svg>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

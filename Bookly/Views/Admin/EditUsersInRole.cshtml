@@ -7,8 +7,9 @@
 }
 
 <form method="post">
-    <div>
-        <h2 class="mb-3">Edit users in role "@roleName"</h2>
+
+    <div class="container " style="margin: 200px">
+        <h4 class="mb-4">Edit users in role "@roleName"</h4>
         <div>
             @for (int i = 0; i < Model.Count; i++)
             {
@@ -27,4 +28,5 @@
             <input type="submit" value="Update" class="btn btn-success" />
         </div>
     </div>
+    
 </form>
