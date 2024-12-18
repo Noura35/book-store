@@ -1,9 +1,11 @@
 using Bookly.Data;
 using Bookly.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bookly.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly BooklyContext _context;

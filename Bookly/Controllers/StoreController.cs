@@ -9,10 +9,11 @@ using Bookly.Data;
 using Bookly.Models;
 using Microsoft.AspNetCore.Authorization;
 
+
+
 namespace BookStore.Models
 {
     [AllowAnonymous]
-
     public class StoreController : Controller
     {
         
@@ -24,7 +25,7 @@ namespace BookStore.Models
         }
 
         
-        
+        [AllowAnonymous]
         // GET: Store
         public async Task<IActionResult> Index()
         {

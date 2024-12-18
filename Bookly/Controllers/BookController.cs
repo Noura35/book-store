@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bookly.Data;
 using Bookly.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bookly.Controllers
 {
+    
+    [Authorize(Roles = "Admin")]
     public class BookController : Controller
     {
         private readonly BooklyContext _context;
@@ -19,6 +22,8 @@ namespace Bookly.Controllers
             _context = context;
         }
 
+        
+        [AllowAnonymous]
         // GET: Book
         public async Task<IActionResult> Index()
         {
