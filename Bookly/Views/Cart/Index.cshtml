@@ -5,7 +5,7 @@
     
 }
 
-<h1>Cart</h1>
+<div class="container " style="margin: 200px">
 
 @if (Model.CardItems.Count > 0)
 {
@@ -29,7 +29,7 @@
             <tr>
                 <td>
                     <a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id">
-                        <img src="@item.Book.urlImg" class="card-img-top card-img-custom">
+                        <img src="@item.Book.urlImg" style="height: 20em">
                     </a>
                 </td>
                 <td>
@@ -72,5 +72,5 @@ else
 {
 <h3 class="text-center"> Cart is empty</h3>
 }
-
+</div>
 

@@ -55,71 +55,98 @@ namespace Bookly.Controllers
         }
 
         // POST: Book/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,title,desc,lang,isbn,datePub,price,author,urlImg")] Book book)
+    [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Create([Bind("Id,title,desc,lang,isbn,datePub,price,author")] Book book, IFormFile urlImg)
+{
+    if (ModelState.IsValid)
+    {
+        if (urlImg != null && urlImg.Length > 0)
         {
-            if (ModelState.IsValid)
+            // Définir le chemin de l'image où elle sera stockée
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", urlImg.FileName);
+
+            // Sauvegarder l'image dans ce chemin
+            using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await urlImg.CopyToAsync(stream);
             }
-            return View(book);
+
+            // Enregistrer le chemin de l'image dans le modèle Book
+            book.urlImg = "/uploads/" + urlImg.FileName;
         }
 
-        // GET: Book/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        _context.Add(book);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+    return View(book);
+}
+
+// GET: Book/Edit/5
+public async Task<IActionResult> Edit(int? id)
+{
+    if (id == null)
+    {
+        return NotFound();
+    }
+
+    var book = await _context.Books.FindAsync(id);
+    if (book == null)
+    {
+        return NotFound();
+    }
+    return View(book);
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Edit(int id, [Bind("Id,title,desc,lang,isbn,datePub,price,author")] Book book, IFormFile urlImg)
+{
+    if (id != book.Id)
+    {
+        return NotFound();
+    }
+
+    if (ModelState.IsValid)
+    {
+        try
         {
-            if (id == null)
+            if (urlImg != null && urlImg.Length > 0)
             {
-                return NotFound();
-            }
+                // Définir le chemin de l'image où elle sera stockée
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", urlImg.FileName);
 
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-            return View(book);
-        }
-
-        // POST: Book/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,title,desc,lang,isbn,datePub,price,author,urlImg")] Book book)
-        {
-            if (id != book.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                // Sauvegarder l'image dans ce chemin
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
+                    await urlImg.CopyToAsync(stream);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BookExists(book.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                // Mettre à jour le chemin de l'image dans le modèle Book
+                book.urlImg = "/uploads/" + urlImg.FileName;
             }
-            return View(book);
+
+            _context.Update(book);
+            await _context.SaveChangesAsync();
         }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!BookExists(book.Id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+        return RedirectToAction(nameof(Index));
+    }
+    return View(book);
+}
+
+
 
         // GET: Book/Delete/5
         public async Task<IActionResult> Delete(int? id)

@@ -4,7 +4,8 @@
     ViewData["Title"] = "CheckoutComplete";
 }
 
-<h1>Thank you for your order!</h1>
+<div class="container " style="margin: 200px">
+    <h4 class="mb-4">Thank you for your order!</h4>
 
 <h5 class="mt-5">Order Id: @Model.Id</h5>
 <table class="table">
@@ -22,7 +23,7 @@
         var itemTotal = item.book.price * item.quantity;
         <tr>
             <td>
-                <a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id"><img src="@item.book.urlImg" style="height: 4em"></a>
+                <a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id"><img src="@item.book.urlImg" style="height: 20em"></a>
             </td>
             <td>
                 <a class="a-cleanup" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id">@item.book.title</a>
@@ -47,3 +48,4 @@
     <td></td>
     </tfoot>
 </table>
+</div>
